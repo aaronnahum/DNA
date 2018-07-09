@@ -19,21 +19,38 @@ import javax.mail.internet.MimeMessage;
  */
 public class sendMail {
 	
-    public static void main(String[] args) {
+	public static void main(String args[]) {
+		mailContent(1);
+	}
+	public static void mailContent(int mailContent) {
+		if(mailContent == 1) {
+			String content1 = "Dear Lead,"
+            		+ "\n\n Associate #1 would like you to open up a new Revision"
+            		+ "\n\n\n Associate";
+			Mail("dsppracticeemail@gmail.com","Kepstrum2005","15nw2@queensu.ca","Testing Subject", content1);
+		}else if (mailContent ==2) {
+			String content2 = "Dear Lead,"
+            		+ "\n\n Revision #3 has been Released from Revision Control";
+			Mail("dsppracticeemail@gmail.com","Kepstrum2005","15nw2@queensu.ca","Testing Subject", content2);
+		}
+	}
+    public static void Mail(String username, String password, String receiver, String subject, String content) {
 
     	/**
     	 * Has to send from a gmail account.
     	 * This is a gmail account made for our testing purposes.
     	 */
-        final String username = "dsppracticeemail@gmail.com";
-        final String password = "Kepstrum2005";
+        //String username = "dsppracticeemail@gmail.com";
+        //String password = "Kepstrum2005";
 
+    	// Mailing properties
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
+        // creates a mail session
         Session session = Session.getInstance(props,
           new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -44,26 +61,18 @@ public class sendMail {
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("dsppracticeemail@gmail.com"));
+            message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
-                InternetAddress.parse("15nw2@queensu.ca"));
-            
-            message.setSubject("Testing Subject");
-            
-            String somethingHasBeenReleased = ("Dear Lead,"
-            		+ "\n\n Revision #3 has been Released from Revision Control");
-            
-            String toOpenNewRevision = ("Dear Lead,"
-            		+ "\n\n Associate #1 would like you to open up a new Revision"
-            		+ "\n\n\n Associate");
-            message.setText(toOpenNewRevision);
-            
-            //message.setText("Dear Mail Crawler,"
-            //    + "\n\n No spam to my email, please!");
-
+                InternetAddress.parse(receiver));
+            //sets the subject of the email
+            message.setSubject(subject);
+            // sets the text of the email
+            // going to be like Associate would like to release etc
+            message.setText(content);
+            //this send the message
             Transport.send(message);
 
-            System.out.println("Email Sent :)");
+            System.out.println("Email WORKED :)");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
