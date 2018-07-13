@@ -85,8 +85,6 @@ public class RevisionLog{
 
         int screenProportionHeightby25 = screenHeight/25;   
 
-        //      Line line1 = LineBlackNoFill(screenProportionHeightby25,screenProportionHeightby25,screenProportionHeightby25,screenHeight-80);
-        //            borderLines.add(line1);
         Line line11 = LineBlackNoFill(screenProportionHeightby25,screenProportionHeightby25+40,screenProportionHeightby25,screenHeight-80);
 
         System.out.println("SCREEN BY 25:" + screenProportionHeightby25 );
@@ -96,9 +94,6 @@ public class RevisionLog{
 
         Line line3 = LineBlackNoFill(screenWidth-screenProportionHeightby25,screenProportionHeightby25+40,screenWidth-screenProportionHeightby25,screenHeight-80);
        
-        //Line line4 = LineBlackNoFill(screenProportionHeightby25, proportionalHeight, (screenWidth-screenProportionHeightby25), proportionalHeight);
-        //borderLines.add(line4);
-
         Line line = LineBlackNoFill(screenWidth-screenProportionHeightby25, screenHeight-80, screenProportionHeightby25, screenHeight-80);
 
         root.getChildren().addAll(line11,line2,line3,line);
@@ -180,31 +175,6 @@ public class RevisionLog{
         Button btnDNAGenerator = button("DNA Generator", fieldWidthAlignment*24, proportionalHeight*numberOfFields-15, "functionalButton", true, 75*scale, "Redirects to DNA Generator Page");
 
         Button btnDNALibrary = button("DNA Library", fieldWidthAlignment*27, proportionalHeight*numberOfFields, "functionalButton", true, 90*scale, "Redirects to DNA Library Page");
-
-// Button to import an image from comp        
-//        Button btnImportImage = ButtonClass.button("Import Image", fieldWidthAlignment*31, proportionalHeight*numberOfFields, "functionalButton", true, "Import an Image to the Program");
-//        btnImportImage.setOnAction(e -> {
-//        	final FileChooser fileChooser = new FileChooser();
-//        	fileChooser.setTitle("Import Image");
-//        	fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-//        	fileChooser.getExtensionFilters().addAll(
-//        			new FileChooser.ExtensionFilter("All Image Files (*.jpg; *.png)", "*.jpg", "*.png"),
-//        			new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-//        			new FileChooser.ExtensionFilter("PNG", "*.png"));
-//        	File file = fileChooser.showOpenDialog(DSP.window);
-//        	if (file != null) {
-//        		Image image = new Image(file.toURI().toString(), 100, 150, true, true);
-//        		ImageView imageView = new ImageView(image);
-//        		imageView.setFitWidth(100);
-//        		imageView.setFitHeight(150);
-//        		imageView.setX(600);
-//        		imageView.setY(600);
-//        		imageView.setPreserveRatio(true);
-//
-//        		RevisionLog.group.getChildren().add(imageView);
-//        	}
-//        });
-
         root.getChildren().addAll(btnAddAField,btnPrint,btnDashboard,btnProjectRegistration,btnSaveDraft,btnRelease,btnRequestToLead,btnScope,btnTermsNorms,btnControlVolume,btnSystemModels,btnInterface,btnDIP,btnDIF,btnDIL,btnKPFs,btnDIPVerification,btnDNAGenerator);
 
         
@@ -242,27 +212,6 @@ public class RevisionLog{
         Label lblCode = label("Release Code", 100, 15, proportionalWidth*5, proportionalHeight *1.25, "labelBiggerText", "The Code to Release the Revision");
         root.getChildren().addAll(lblRevision, lblDate, lblCode);
 
-        /**
-         * Creates the connection to the database.
-         * Called everytime you need to insert,delete, or update
-         * the database
-         */
-       // ConnectionToDatabase.connectToDatabase();
-        
-        //EmailClass1.emailPerson("dsppracticeemail@gmail.com", "Kepstrum2005", "Testing Subject", "Dear Lead, ", "15nw2@queensu.ca");
-        //EmailClass.Email();
-        //revisionLogUpdateFields();
-        //PDFClass.generatePDFFromSQL();
-
-//        ArrayList<TextArea> textarea = TextfieldClass.textArea();
-//        for(int i = 0; i < textarea.size(); i++){
-//            root.getChildren().add(textarea.get(i));
-//        }
-        
-        Line line1 = LineBlackNoFill(60, proportionalHeight, screenWidth-77, proportionalHeight);
-        //root.getChildren().add(line1);
-
-        
         pane.setContent(group);
         pane.setPannable(true);
         /**
@@ -288,55 +237,6 @@ public class RevisionLog{
         stage.show();
         
     }
-//    /**
-//    * Fetches the user's information from the database
-//    */
-//    public static void revisionLogUpdateFields(){
-//        ArrayList<TextField> x = new ArrayList<>();
-//        numberOfFields = 2.1;
-//        try{
-//            Connection connection = ConnectionToDatabase.connectToDatabase();
-//            String query1 = "SELECT * FROM mydb.revisionlog";
-//            Statement stst = connection.createStatement();
-//            ResultSet fullRevisionLog = stst.executeQuery(query1); 
-//            int countPDF = 0;
-//            while(fullRevisionLog.next()){
-//                numberOfFields += 0.4;
-//                int revisionNum = fullRevisionLog.getInt("REVISION_ID");
-//                Date dateCreated = fullRevisionLog.getDate("DATE");
-//                String description = fullRevisionLog.getString("DESCRIPTION");
-//                int code = fullRevisionLog.getInt("CODE");
-//                int saveAsPDF = fullRevisionLog.getInt("SAVEPDF");
-//                
-//                countPDF += saveAsPDF;
-//                
-//                String scope = fullRevisionLog.getString("SCOPE");
-//                String termsNorms = fullRevisionLog.getString("TERMSNORMS");
-//                String controlVolume = fullRevisionLog.getString("CONTROLVOLUME");
-//                String systemModels = fullRevisionLog.getString("SYSTEMMODELS");
-//                String dip = fullRevisionLog.getString("DIP");
-//                String dif = fullRevisionLog.getString("DIF");
-//                String dil = fullRevisionLog.getString("DIL");
-//                String kpfs = fullRevisionLog.getString("KPFS");
-//                String dipVerification = fullRevisionLog.getString("DIPVERIFICATION");
-//                String dnaGenerator = fullRevisionLog.getString("DNAGENERATOR");
-//                String dnaLibrary = fullRevisionLog.getString("DNALIBRARY");
-//                
-//                System.out.format("%s, %s, %s, %s\n", revisionNum, dateCreated, description, saveAsPDF);
-//
-//                x = revisionLogAddAField(countPDF);
-//                for(int i = 0; i < x.size(); i++)
-//                    group.getChildren().add(x.get(i));
-//                x.clear();
-//                
-//            }
-//            
-//        } catch(Exception e) {
-//            System.out.println("HERE");
-//            System.err.println(e.getMessage());
-//        }   
-//    }
-
     private class ZoomingPane extends Pane {
         Node content;
         private DoubleProperty zoomFactor = new SimpleDoubleProperty(1);
@@ -384,17 +284,6 @@ public class RevisionLog{
         }
     }
 
-    /**
-     * 
-     * @param text The text on the button
-     * @param positionX The position of the button on the x-axis
-     * @param positionY The position of the button on the y-axis
-     * @param style The CSS style for the button
-     * @param shadow Determines if there is a shadow when the mouse is over the button
-     * @param wrap The max width of the button (used for wrapping the text)
-     * @param a tool tip help option
-     * @return This returns a button
-     */
     public static Button button(String text, double positionX, double positionY, String style, Boolean shadow, double wrap, String tip) {
 
         Button button1 = new Button();
@@ -458,16 +347,7 @@ public class RevisionLog{
 
             return line;
         }  
-        /**
-         * 
-         * @param text The text on the label.
-         * @param boxWidth The width of the label
-         * @param boxHeight The height of the label
-         * @param x The x position of the label
-         * @param y The y position of the label
-         * @param style The style used for this certain label
-         * @return Returns a label
-         */
+
         public static Label label(String text, int boxWidth, int boxHeight, int x, double y, String style) {
            
             Label label1 = new Label();
@@ -481,17 +361,7 @@ public class RevisionLog{
                     
             return label1;
         }
-        /**
-         * 
-         * @param text The text on the label.
-         * @param boxWidth The width of the label
-         * @param boxHeight The height of the label
-         * @param x The x position of the label
-         * @param y The y position of the label
-         * @param style The style used for this certain label
-         * @param tip Tool tip used for Help
-         * @return Returns a label
-         */
+
         public static Label label(String text, int boxWidth, int boxHeight, int x, double y, String style, String tip) {
            
             Label label1 = new Label();
@@ -506,17 +376,7 @@ public class RevisionLog{
                     
             return label1;
         }
-        /**
-         * 
-         * @param text The text on the label.
-         * @param boxWidth The width of the label
-         * @param boxHeight The height of the label
-         * @param x The x position of the label
-         * @param y The y position of the label
-         * @param style The style used for this certain label
-         * @param tip Tool tip used for Help
-         * @return Returns a label
-         */
+
         public static Label label(String text, int boxWidth, int boxHeight, double x, double y, String style, String tip) {
             
             Label label1 = new Label();
@@ -531,15 +391,7 @@ public class RevisionLog{
                     
             return label1;
         }
-            /**
-             * 
-             * @param text The text on the label.
-             * @param boxWidth The width of the label
-             * @param boxHeight The height of the label
-             * @param style The style used for this certain label
-             * @param def The definition of the label
-             * @return Returns a label
-         */
+
         public static Label label(String text, int boxWidth, int boxHeight, String style, Label def) {
             DropShadow shadowDrop = new DropShadow();
             Label label1 = new Label();
@@ -561,14 +413,7 @@ public class RevisionLog{
             });        
             return label1;
         }
-        /**
-         * 
-         * @param text The text on the label.
-         * @param boxWidth The width of the label
-         * @param boxHeight The height of the label
-         * @param style The style used for this certain label
-         * @return Returns a label
-         */
+
         public static Label label(String text, int boxWidth, int boxHeight, String style) {
 
             Label label1 = new Label();
@@ -595,11 +440,7 @@ public class RevisionLog{
                     
             return label1;
         } 
-        /**
-         * 
-         * @param countPDF Taken from the database for each revision. It's used to check if that revision has been saved as a PDF yet
-         * @return This returns an array list containing all the fields for a revision. These fields will be immutable if the revision has been saved as a PDF
-         */
+
         public static ArrayList<TextField> revisionLogAddAField(int countPDF){
             ArrayList<TextField> AddAFieldTextFields = new ArrayList<>();
             
@@ -672,27 +513,14 @@ public class RevisionLog{
                     TextField txtDNALibrary = textfield("123", 50,true,fieldWidthAlignment * 27, proportionalHeight*numberOfFields1, "textField");
 
                     AddAFieldTextFields.add(txtDNALibrary);                 
-                    
-
                 }
-
             }
-            
+        
             return AddAFieldTextFields;
         }
         
-        /**
-         * 
-         * @param text The prompt text set in the text field
-         * @param textWidth The width of the text field
-         * @param booll Determines if the text field is editable
-         * @param positionX The position of the text field on the x-axis
-         * @param positionY The position of the text field on the y-axis
-         * @param style The CSS style associated with the text field
-         * @return This returns a text field
-         */
         public static TextField textfield(String text, int textWidth, Boolean booll, double positionX, double positionY, String style) {
-    	TextField textfield1 = new TextField();
+        	TextField textfield1 = new TextField();
             textfield1.setPromptText(text);
             textfield1.setAlignment(Pos.CENTER);
             textfield1.setPrefWidth(textWidth);
@@ -705,19 +533,9 @@ public class RevisionLog{
             return textfield1;
         }
         
-        /**
-         * 
-         * @param text The prompt text set in the text area
-         * @param textWidth The width of the text area
-         * @param positionX The position of the text area on the x-axis
-         * @param positionY The position of the text area on the y-axis
-         * @param style The CSS style associated with the text area
-         * @return This returns a text area
-         */
         public static TextArea textarea(String text, int textWidth, int positionX, double positionY, String style){
             
             TextArea textarea1 = new TextArea();
-            
             textarea1.setPromptText(text);
             textarea1.setPrefWidth(textWidth);
             textarea1.setLayoutX(positionX);
@@ -726,160 +544,5 @@ public class RevisionLog{
             
             
             return textarea1;
-        }  
-        public static void help() {
-    		Stage window = new Stage();
-                   
-            ScrollPane pane = new ScrollPane();
-    		
-            window.initModality(Modality.APPLICATION_MODAL);
-    		window.setTitle("Help");
-    		window.setHeight(500);
-    		window.setWidth(550);
-    		window.setMinWidth(250);
-    		
-    		DropShadow shadowDrop = new DropShadow();
-    		
-            Label lblHelpDef = LabelClass.label("Scroll Over Word For Its Definition", "helpTitle");
-    		
-                    
-                    
-            // Uses the label method from LabelClass to create a label which starts out invisible
-    		Label lblRevisionDef = LabelClass.label("Revision number of test.", 40, 25, "");
-    		lblRevisionDef.setVisible(false);
-            // Uses the label method from LabelClass to create a label. Has an action where you mouse over the label, it'll set the definition label visible
-    		Label lblRevision = LabelClass.label("Revision", 110, 25, "label", lblRevisionDef);
-
-    		Label lblDateDef = LabelClass.label("The date the test took place.", 40, 25, "");
-    		lblDateDef.setVisible(false);
-    		Label lblDate = LabelClass.label("Date", 110, 25, "label",lblDateDef);
-
-    		Label lblDescriptionDef = LabelClass.label("A brief description of the associated revision.", 40, 25, "");
-    		lblDescriptionDef.setVisible(false);
-    		Label lblDescription = LabelClass.label("Description", 110, 25, "label",lblDescriptionDef);
-                    
-                    
-                    
-    		Label lblScopeDef = LabelClass.label("Redirects to scope page.", 40, 25, "");
-    		lblScopeDef.setVisible(false);
-    		Label lblScope = LabelClass.label("Scope", 110, 25, "label",lblScopeDef);
-
-    		Label lblTermsNormsDef = LabelClass.label("Redirects to Terms/Norms page.", 40, 25, "");
-    		lblTermsNormsDef.setVisible(false);
-    		Label lblTermsNorms = LabelClass.label("Terms/Norms", 110, 25, "label",lblTermsNormsDef);
-
-    		Label lblControlVolumeDef = LabelClass.label("Redirects to Control Volume page.", 40, 25, "");
-    		lblControlVolumeDef.setVisible(false);
-    		Label lblControlVolume = LabelClass.label("Control Volume", 110, 25, "label",lblControlVolumeDef);
-    		Label lblSystemModelsDef = LabelClass.label("Redirects to System Models page.", 40, 25, "");
-    		lblSystemModelsDef.setVisible(false);
-    		Label lblSystemModels = LabelClass.label("System Models", 110, 25, "label",lblSystemModelsDef);
-
-    		Label lblInterfaceDef = LabelClass.label("Redirects to Interface page.", 40, 25, "");
-    		lblInterfaceDef.setVisible(false);
-    		Label lblInterface = LabelClass.label("Interface", 110, 25, "label",lblInterfaceDef);                
-
-    		Label lblDIPDef = LabelClass.label("Redirects to DIP page.", 40, 25, "");
-    		lblDIPDef.setVisible(false);
-    		Label lblDIP = LabelClass.label("DIP", 110, 25, "label",lblDIPDef);  
-    		Label lblDIFDef = LabelClass.label("Redirects to DIF page.", 40, 25, "");
-    		lblDIFDef.setVisible(false);
-    		Label lblDIF = LabelClass.label("DIF", 110, 25, "label",lblDIFDef);   
-
-    		Label lblDILDef = LabelClass.label("Redirects to DIL page.", 40, 25, "");
-    		lblDILDef.setVisible(false);
-    		Label lblDIL = LabelClass.label("DIL", 110, 25, "label",lblDILDef);                
-    		Label lblKPFsDef = LabelClass.label("Redirects to KPFs page.", 40, 25, "");
-    		lblKPFsDef.setVisible(false);
-    		Label lblKPFs = LabelClass.label("KPFs", 110, 25, "label",lblKPFsDef);                
-
-    		Label lblDIPVerificationDef = LabelClass.label("Redirects to DIP Verification page.", 40, 25, "");
-    		lblDIPVerificationDef.setVisible(false);
-    		Label lblDIPVerification = LabelClass.label("DIP Verification", 110, 25, "label",lblDIPVerificationDef);                
-
-    		Label lblDNAGeneratorDef = LabelClass.label("Redirects to DNA Generator page.", 40, 25, "");
-    		lblDNAGeneratorDef.setVisible(false);
-    		Label lblDNAGenerator = LabelClass.label("DNA Generator", 110, 25, "label",lblDNAGeneratorDef);                
-
-    		Label lblDNALibraryDef = LabelClass.label("Redirects to DNA Library page.", 40, 25, "");
-    		lblDNALibraryDef.setVisible(false);
-    		Label lblDNALibrary = LabelClass.label("DNA Library", 110, 25, "label",lblDNALibraryDef);                
-
-    		Label lblAddAFieldDef = LabelClass.label("Adds a new revision line.", 40, 25, "");
-    		lblAddAFieldDef.setVisible(false);
-    		Label lblAddAField = LabelClass.label("Add A New Revision and Unlock the Dashboard", 110, 25, "functionalButton",lblAddAFieldDef);                  
-                                     
-                    
-    		Label lblCodeDef = LabelClass.label("The code to release the revision.", 40, 25, "");
-    		lblCodeDef.setVisible(false);
-    		Label lblCode = LabelClass.label("Code", 110, 25, "label",lblCodeDef);
-
-    		
-
-
-    		
-    		Label lblSavePDFDef = LabelClass.label("Save as PDF.", 40, 25, "");
-    		lblSavePDFDef.setVisible(false);
-    		Label lblSavePDF = LabelClass.label("Save as PDF", 110, 25, "functionalButton",lblSavePDFDef);
-
-    		
-    		Label lblReleaseDef = LabelClass.label("Releases the revision.", 40, 25, "");
-    		lblReleaseDef.setVisible(false);
-    		
-    		Label lblRelease = LabelClass.label("Release", 110, 25, "functionalButton",lblReleaseDef);
-
-                    
-    		/**
-    		 * Print directs to separate print class
-    		 */
-    		
-    		Label lblPrintDef = LabelClass.label("Print the current page", 40, 25, "");
-    		lblPrintDef.setVisible(false);
-    		
-    		Label lblPrint = LabelClass.label("Print", 110, 25, "functionalButton",lblPrintDef);
-    		
-    		/**
-    		 * Directs to DNA Plot page
-    		 */
-    		
-    		Label lblDashboardDef = LabelClass.label("Redirects to the dashboard page.", 40, 25, "");
-    		lblDashboardDef.setVisible(false);
-    		Label lblDashboard = LabelClass.label("Dashboard", 110, 25, "functionalButton",lblDashboardDef);
-
-    		
-    		BorderPane layout = new BorderPane();
-    		
-    		HBox title = new HBox();
-    		title.setPadding(new Insets(15, 12, 15, 12));
-    		title.getChildren().add(lblHelpDef);
-    		//title.setStyle("-fx-background-color: #DEFFB9");
-    		layout.setTop(title);
-    		
-    		VBox words = new VBox();
-    		words.setPadding(new Insets(10));
-    		words.setSpacing(10);
-    		words.getChildren().addAll(lblRevision, lblDate, lblScope, lblTermsNorms, lblControlVolume, lblSystemModels,lblInterface, lblDIP, lblDIF, lblDIL, lblKPFs, lblDIPVerification, lblDNAGenerator, lblDNALibrary,lblDescription, lblCode, lblAddAField, lblSavePDF, lblRelease, lblPrint, lblDashboard);
-    		//words.setStyle("-fx-background-color: #DEFFB9");
-    		layout.setLeft(words);
-    		
-    		VBox definitions = new VBox();
-    		definitions.setPadding(new Insets(10.5));
-    		definitions.setSpacing(10);
-    		definitions.getChildren().addAll(lblRevisionDef, lblDateDef, lblScopeDef,lblTermsNormsDef, lblControlVolumeDef, lblSystemModelsDef, lblInterfaceDef, lblDIPDef, lblDIFDef, lblDILDef, lblKPFsDef, lblDIPVerificationDef, lblDNAGeneratorDef, lblDNALibraryDef,lblDescriptionDef, lblCodeDef, lblAddAFieldDef, lblSavePDFDef, lblReleaseDef, lblPrintDef, lblDashboardDef);
-    		//definitions.setStyle("-fx-background-color: #DEFFB9");
-    		layout.setCenter(definitions);
-
-
-    		pane.setContent(layout);
-    		// scene = new Scene(pane, Color.WHITE);
-    		// stage.setScene(scene);
-
-
-    		Scene scene = new Scene(pane);
-    		//scene.getStylesheets().add(DSP.css);
-    		window.setScene(scene);
-    		window.setResizable(false);
-    		window.showAndWait();
-
-    	} //end help        
+        }         
 }
