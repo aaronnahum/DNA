@@ -1,0 +1,181 @@
+I am creating a software, however, I want the client to be able to print to a local printer on paper sizes like (8.5x11, 24x18, 36x24). I am setting a node layout to the size of the user's screen (most of the time 1920 by 1080 pixels).
+
+This is what the node looks like. This is what i'm getting
+
+I've tried several Stack overflow posts such as:Link1 and Link2. It appears that my problem closely relates to Link2.
+
+From my understanding, I believe I am scaling the node incorrectly and not fitting it the printable scene.
+
+Below are two methods I've tried.
+
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Modality;
+
+public class Print {
+
+    public static void pageSetup(Node node) { 
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        if (job == null){
+            return;
+        }
+        boolean proceed = job.showPrintDialog(null);
+
+        if (proceed){
+            print(job, node);
+        }
+    } // end pageSetup
+
+    private static void print(PrinterJob job, Node node) { //Prints the page
+
+        boolean printed = job.printPage(node);
+
+        if (printed){
+            job.endJob(); //End the printer job
+        }
+        else { //Printing Error
+            Alert printerError = new Alert(AlertType.ERROR);
+            printerError.setTitle("Error");
+            printerError.setHeaderText("Printing Error");
+            printerError.setContentText("Uh oh! That's not supposed to happen!");
+            printerError.initModality(Modality.APPLICATION_MODAL);
+            printerError.showAndWait();
+        }
+    }// end print
+}
+This method doesn't work because it prints off and converts the 1920x1080 node.
+
+Which then leads me to my next method. Where I am physically setting the imageable area and the paper size.
+
+package DSP;
+
+import DSP.RevisionLog;
+import com.itextpdf.text.BadElementException;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.Paper;
+import java.awt.Image;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.*;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+import javax.imageio.ImageIO;
+import javax.print.*;
+
+public class PrintTest{
+
+    private static BufferedImage image;
+    static Image scaled = null;
+
+    public static void printPDF() throws IOException, BadElementException, PrintException {
+
+        WritableImage snapshot = RevisionLog.group.snapshot(new SnapshotParameters(), null);
+        File file = new File("log.png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", file);
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+
+        image = ImageIO.read(new File("log.png"));
+
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        if (pj.printDialog()) {
+            PageFormat pf = pj.defaultPage();
+            Paper paper = pf.getPaper();
+
+            //    609.6 x 457.2 = 24x18 in
+            double width = fromCMToPPI(60.96);
+            double height = fromCMToPPI(45.72);
+
+            //2100.0,1500.0);
+            paper.setSize(609.6,457.2);         
+
+            paper.setImageableArea(
+                        fromCMToPPI(1.0),
+                        fromCMToPPI(1.0),
+                        609.6 - fromCMToPPI(1.0),
+                        457.2 - fromCMToPPI(1.0));
+            pf.setOrientation(PageFormat.LANDSCAPE);
+            pf.setPaper(paper);           
+
+            PageFormat validatePage = pj.validatePage(pf);
+            System.out.println("Valid- " + dump(validatePage));
+            pj.setPrintable(new MyPrintable(), validatePage);
+            try {
+                pj.print();
+            } catch (PrinterException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    protected static double fromPPItoCM(double dpi) {
+        return dpi / 72 / 0.393700787;
+    }
+
+    protected static double fromCMToPPI(double cm) {
+        return toPPI(cm * 0.393700787);
+    }
+
+    protected static double toPPI(double inch) {
+        return inch * 72d;
+    }
+
+    protected static String dump(Paper paper) {
+        StringBuilder sb = new StringBuilder(64);
+          sb.append(paper.getWidth()).append("x").append(paper.getHeight())
+                    .append("/").append(paper.getImageableX()).append("x").
+                    append(paper.getImageableY()).append(" - ").append(paper
+                    .getImageableWidth()).append("x").append(paper.getImageableHeight());
+    return sb.toString();
+    }
+
+    protected static String dump(PageFormat pf) {
+        Paper paper = pf.getPaper();
+        return dump(paper);
+    }
+
+    public static class MyPrintable implements Printable {
+
+        @Override
+        public int print(Graphics graphics, PageFormat pageFormat,
+                                     int pageIndex) throws   PrinterException {
+            System.out.println(pageIndex);
+            int result = NO_SUCH_PAGE;
+            if (pageIndex < 1) {
+                Graphics2D g2d = (Graphics2D) graphics;
+                System.out.println("[Print] " + dump(pageFormat));
+                double width = pageFormat.getImageableWidth();
+                double height = pageFormat.getImageableHeight();
+
+                System.out.println("Print Size = " + fromPPItoCM(width) + "x" + fromPPItoCM(height));
+                g2d.translate((int) pageFormat.getImageableX(),
+                            (int) pageFormat.getImageableY());
+
+                if (width > height) {
+                    scaled = image.getScaledInstance((int)Math.round(width), -1, Image.SCALE_SMOOTH);
+                } else {
+                    scaled = image.getScaledInstance(-1, (int)Math.round(height), Image.SCALE_SMOOTH);
+                }
+                g2d.drawImage(scaled, 0, 0, null);
+                result = PAGE_EXISTS;
+            }
+            return result;
+        }
+
+    }
+
+
+}
+This method did give different results where some coordinates were able to fit into the imageable area. However, they were very inconsistent (I'm guessing because the paper size, imageable area were set on two different instances).
