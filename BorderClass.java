@@ -1,5 +1,14 @@
-package DSP;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javafxapplication9;
 
+/**
+ *
+ * @author mzhao
+ */
 import java.util.ArrayList;
 import javafx.scene.control.Label;
 
@@ -31,5 +40,44 @@ public class BorderClass{
 
         return line;
     }
-  	
+    /**
+     * 
+     * @return This returns an array list containing the lines to create the boarder of the screen
+     */
+    public static ArrayList<Line> border1() {
+
+        ArrayList<Line> borderLines = new ArrayList<>();
+
+        int screenWidth = ScreenResolutionClass.resolutionWidth();
+        int screenHeight = ScreenResolutionClass.resolutionHeight();
+        int proportionalHeight = ScreenResolutionClass.proportionalHeight(screenHeight);
+        double proportionalWidth = ScreenResolutionClass.proportionalWidth(screenWidth);
+      
+        int screenProportionHeightby25 = screenHeight/25;   
+        
+  //      Line line1 = LineBlackNoFill(screenProportionHeightby25,screenProportionHeightby25,screenProportionHeightby25,screenHeight-80);
+//        borderLines.add(line1);
+        Line line11 = LineBlackNoFill(screenProportionHeightby25,screenProportionHeightby25+40,screenProportionHeightby25,screenHeight-80);
+        borderLines.add(line11);
+        System.out.println("SCREEN BY 25:" + screenProportionHeightby25 );
+
+        Line line2 = LineBlackNoFill(screenProportionHeightby25,screenProportionHeightby25+40,screenWidth-screenProportionHeightby25,screenProportionHeightby25+40);
+        borderLines.add(line2);              
+
+        Line line3 = LineBlackNoFill(screenWidth-screenProportionHeightby25,screenProportionHeightby25+40,screenWidth-screenProportionHeightby25,screenHeight-80);
+        borderLines.add(line3);
+
+        //Line line4 = LineBlackNoFill(screenProportionHeightby25, proportionalHeight, (screenWidth-screenProportionHeightby25), proportionalHeight);
+        //borderLines.add(line4);
+
+        Line line = LineBlackNoFill(screenWidth-screenProportionHeightby25, screenHeight-80, screenProportionHeightby25, screenHeight-80);
+        borderLines.add(line);
+
+
+
+        return borderLines;
+    }
+    
+	
 }
+

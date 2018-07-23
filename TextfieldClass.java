@@ -1,5 +1,9 @@
-package DSP;
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javafxapplication9;
 
 import java.util.ArrayList;
 import javafx.geometry.Pos;
@@ -15,13 +19,25 @@ public class TextfieldClass {
     static double proportionalWidth = ScreenResolutionClass.proportionalWidth(screenWidth);
     static double numberOfFields = 2.5;
     static double halfPlusNumberOfFields = 2.875;
+    /**
+     * 
+     * @return This returns an array list with the text fields belonging to the revision log page
+     */
+    public static ArrayList<TextField> revisionLogTextFields(){
+        
+        ArrayList<TextField> textfields = new ArrayList<>();
+        
+        TextField txtCode = textfield("Code",120, true, proportionalWidth*7.25, proportionalHeight*1.25, "textFieldBiggerText");
+        textfields.add(txtCode);    
 
-//    public static ArrayList<TextArea> textArea(){
-//        ArrayList<TextArea> textareas = new ArrayList<>();
-//        TextArea txtAREA= textarea("Text Area",300,500,500,"textField");
-//        //textareas.add(txtAREA);
-//        return textareas;
-//    }
+        return textfields;
+    }
+    public static ArrayList<TextArea> textArea(){
+        ArrayList<TextArea> textareas = new ArrayList<>();
+        TextArea txtAREA= textarea("Text Area",300,500,500,"textField");
+        //textareas.add(txtAREA);
+        return textareas;
+    }
     
     /**
      * 
@@ -154,5 +170,5 @@ public class TextfieldClass {
         
         
         return textarea1;
-    }      
+    }
 }
