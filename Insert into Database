@@ -1,0 +1,77 @@
+import java.sql.*;
+import java.util.Calendar;
+
+/**
+ * A Java MySQL PreparedStatement INSERT example.
+ * It also counters MYSQL Injection with prepared statements (aka why they are good)
+ * Demonstrates the use of a SQL INSERT statement against a
+ * MySQL database, called from a Java program, using a
+ * Java PreparedStatement.
+ * 
+ */
+
+  public static void insert()
+  {
+    try
+    {
+      // create a mysql database connection
+      
+      //Use ConnectionToDatabase class;
+    
+      // create a sql date object so we can use it in our INSERT statement
+      //Calendar calendar = Calendar.getInstance();
+      //java.sql.Date startDate = new java.sql.Date(calendar.getTime().getTime());
+      // can use startDate variable for setDate
+
+
+
+      // the mysql insert statement
+
+      String date = DATE.getDate();
+      String scope = SCOPE.getString();
+      String termsNorms = TERMSNORMS.getString();
+      String controlVolume = CONTROLVOLUME.getString();
+      String systemModels = SYSTEMMODELS.getString();
+      String interface1 = INTERFACE.getString();
+      String dip = DIP.getString();
+      String dif = DIF.getString();
+      String dil = dil.getString();
+      String kpfs = KPFS.getString();
+      String dipVerification = DIPVERIFICATION.getString();
+      String dnaGenerator = DNAGENERATOR.getString();
+      String dnaLibrary = DNALIBRARY.getString();
+      String description = DESCRIPTION.getString();
+
+      String query = " insert into mydb.revisionLog (date, scope, termsNorms, controlVolume, systemModels, interface1, dip, dif, dil, kpfs, dipVerification, dnaGenerator, dnaLibrary, description)"
+        + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+      // create the mysql insert preparedstatement
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.setString (1, date);
+      preparedStmt.setString (2, scope);
+      preparedStmt.setString (3, termsNorms);
+      //preparedStmt.setDate   (3, startDate);
+      preparedStmt.setBoolean(4, controlVolume);
+      preparedStmt.setInt    (5, systemModels);
+      preparedStmt.setString (6, interface1);
+      preparedStmt.setString (7, dip);
+      preparedStmt.setString (8, dif);
+      preparedStmt.setString (9, dil);
+      preparedStmt.setString (10, kpfs);
+      preparedStmt.setString (11, dipVerification);
+      preparedStmt.setString (12, dnaGenerator);
+      preparedStmt.setString (13, dnaLibrary);
+      preparedStmt.setString (14, description);
+
+
+      // execute the preparedstatement
+      preparedStmt.execute();
+      
+      conn.close();
+    }
+    catch (Exception e)
+    {
+      System.err.println("Got an exception!");
+      System.err.println(e.getMessage());
+    }
+  }
+}

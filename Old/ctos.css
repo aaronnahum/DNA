@@ -1,0 +1,51 @@
+#functionalButton {
+    -fx-background-color:#000000,
+        linear-gradient(#FFDAB9, #FFDAB9), 
+        linear-gradient(#FFDAB9 0%, #FFDAB9 49%, #FFDAB9 50%, #FFDAB9 100%); 
+        -fx-background-insets: 0,1,2;
+        -fx-background-radius: 3,2,1;
+        -fx-padding: 5 10 5 10;
+        -fx-text-fill: black;
+        -fx-font-size: 12px;
+        -fx-font-weight: bold; 
+}
+#textField{
+	-fx-background-color: #d4ffd4;
+	-fx-padding: 5 10 5 10;
+}
+
+#label{
+        -fx-background-color: #000000,
+            linear-gradient(#f49541, #f49541),
+            linear-gradient(#f49541 0%, #f49541 49%, #f49541 50%, #f49541 100%);
+        -fx-background-insets: 0,1,2;
+        -fx-background-radius: 3,2,1;
+        -fx-padding: 5 10 5 10;
+        -fx-text-fill: black;
+        -fx-font-size: 12px;
+        -fx-font-weight: bold;
+}
+
+#revisionControl {
+        -fx-background-color: #000000,
+            linear-gradient(#EED2EE, #EED2EE),
+            linear-gradient(#EED2EE 0%, #EED2EE 49%, #EED2EE 50%, #EED2EE 100%);
+        -fx-background-insets: 0,1,2;
+        -fx-background-radius: 3,2,1;
+        -fx-padding: 5 10 5 10;
+        -fx-text-fill: black;
+        -fx-font-size: 12px;
+        -fx-font-weight: bold;
+}
+
+#otherBorder {
+        -fx-background-color: #000000,
+            linear-gradient(#D3D3D3, #D3D3D3),
+            linear-gradient(#D3D3D3 0%, #D3D3D3 49%, #D3D3D3 50%, #D3D3D3 100%);
+        -fx-background-insets: 0,1,2;
+        -fx-background-radius: 3,2,1;
+        -fx-padding: 5 10 5 10;
+        -fx-text-fill: black;
+        -fx-font-size: 14px;
+        -fx-font-weight: bold;
+}

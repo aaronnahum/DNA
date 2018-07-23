@@ -1,0 +1,19 @@
+	public static void updateFields() {
+		
+		try {
+			Connection connection = connectToDatabase();
+			String query = "SELECT REVISION_ID from revisionlog.revision.log";
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			int count = 0;
+			while(rs.next()) {
+				count +=1;
+			}
+			System.out.println(count);
+		}catch(Exception e) {
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+		}
+		
+		
+	}

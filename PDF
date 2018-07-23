@@ -1,0 +1,72 @@
+
+public static void generatePDF(){
+	
+	try{
+		String file_name="E:\\revisionLog \\revisionLog.pdf";
+		Document document = new Document();
+		PdfWriter.getInstance(document, new FileOutputStream(file_name));
+
+		document.open();
+
+		// simple paragraph
+		Paragraph para= new Paragraph("This is a test");
+		Paragraph para= new Paragraph(" ");
+		Paragraph para= new Paragraph(" ");
+		Paragraph para= new Paragraph(" ");
+		document.add(para);
+
+		//add table
+		PdfPTable table = PdfPTable(3);
+		PdfPCell c1 = new PdfPCell(new Phrase("Heading 1"));
+
+		c1 = new PdfPCell(new Phrase("Heading 2"));
+		table.addCell(c1);
+
+		c1 = new PdfPCell(new Phrase("Heading 3"));
+		table.addCell(c1);
+		table.SetHeaderRows(1);
+
+		table.addCell("1.0");
+		table.addCell("1.1");
+		table.addCell("1.2");
+		table.addCell("2.1");
+		table.addCell("2.2");
+		table.addCell("2.3");
+
+
+		document.add(table);
+
+		document.close();
+		System.out.println("Finished");
+	} catch (Exception e){
+		System.err.println(e);
+	}
+}
+
+public static void fromSQL(){
+	try{
+		Connection connection = connectToDatabase();
+		PreparedStatement ps=null;
+		ResultSet rs=null;
+
+		String query = "SELECT * FROM mydb.revisionlog";
+		ps=connection.prepareStatement(query);
+		rs=ps.executeQuery();
+
+		while (rs.next()){
+			Paragraph para=new Paragraph(rs.getString("REVISION_ID")+"  "+rs.getString("DESCRIPTION"));
+			document.add(para);
+			document.add(new Paragraph(" "));
+
+		} 
+		document.close();
+		System.out.println("Finished");
+
+	} catch (Exception e){
+	System.err.println(e);
+}
+
+
+
+
+

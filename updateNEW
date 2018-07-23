@@ -1,0 +1,152 @@
+public static void updateFields(Group root) {
+		try {
+			Connection connection = connectToDatabase();
+//			String query = "SELECT REVISION_ID from mydb.revision_log";
+//			Statement st = connection.createStatement();
+//			ResultSet rs = st.executeQuery(query);
+//			int count = 0;
+//			while (rs.next())
+//				count++;
+//			System.out.println(count);
+			
+			String query1 = "SELECT * FROM revisionlog.revisionlog";
+			Statement stst = connection.createStatement();
+			ResultSet fullRevisionLog = stst.executeQuery(query1);
+			
+			
+			
+			int StartAtOne = 1;
+			
+			while(fullRevisionLog.next()) {
+				
+				numberOfFields += 0.4;
+				
+				int revisionNum = fullRevisionLog.getInt("REVISION_ID");
+				Date dateCreated = fullRevisionLog.getDate("DATE");
+				String description = fullRevisionLog.getString("DESCRIPTION");
+				int code = fullRevisionLog.getInt("CODE");
+				int release =fullRevisionLog.getInt("RELEASE");
+				System.out.format("%s, %s, %s, %s,\n", revisionNum, dateCreated, description, code);
+				
+				
+				
+				Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+			    int screenWidth=(int) primaryScreenBounds.getWidth();
+			    int screenHeight = (int) primaryScreenBounds.getHeight();
+			    double fieldWidthAlignment = screenWidth/10.5;
+			    int proportionalWidth = screenWidth/16;
+			    int proportionalHeight = screenHeight/10;
+			    
+			    if (release == 0) {
+			    					    
+				    Label lblRevision = new Label();
+				    lblRevision.setText(String.valueOf(("R" + StartAtOne)));
+				    lblRevision.setPrefWidth(100);
+				    lblRevision.setAlignment(Pos.CENTER);
+				    lblRevision.setLayoutX(fieldWidthAlignment);
+				    lblRevision.setLayoutY(proportionalHeight*numberOfFields);
+				    lblRevision.setStyle("-fx-background-color: #d4ffd4;-fx-padding: 5 10 5 10;");
+					
+				    
+				    /**
+				     * Date Text field 1
+				     */
+				    TextField txtDate = new TextField();
+				    txtDate.setText(String.valueOf(dateCreated));
+
+				    txtDate.setPrefWidth(90);
+				    txtDate.setPromptText("yy/mm/dd");
+				    txtDate.setAlignment(Pos.CENTER);
+				    txtDate.setLayoutX(fieldWidthAlignment*2);
+				    txtDate.setLayoutY(proportionalHeight*numberOfFields);
+			        txtDate.setStyle("-fx-background-color: #d4ffd4;");
+			        /**
+			         * Description Textfield 1
+			         * 			         */
+				       
+			        TextField txtDescription = new TextField();
+			        txtDescription.setText(description);
+				    txtDescription.setPrefWidth(260);
+			        txtDescription.setPromptText("1234567890123456789012345678901234567890");
+			        txtDescription.setAlignment(Pos.BASELINE_LEFT);
+			        txtDescription.setLayoutX(fieldWidthAlignment*3);
+			        txtDescription.setLayoutY(proportionalHeight*numberOfFields);
+				    txtDescription.setStyle("-fx-background-color: #d4ffd4;");
+				    /**
+			         * 
+			         * Code TextField 1
+			         * 		         */
+				    TextField txtCode = new TextField();
+				    txtCode.setText(String.valueOf((code)));
+				    txtCode.setPrefWidth(100);
+				    txtCode.setPromptText("1234567890");
+				    txtCode.setAlignment(Pos.CENTER);
+				    txtCode.setLayoutX(fieldWidthAlignment*5);
+				    txtCode.setLayoutY(proportionalHeight*numberOfFields);
+				    txtCode.setStyle("-fx-background-color: #d4ffd4;");
+					
+				    StartAtOne +=1;
+				    root.getChildren().addAll(lblRevision, txtDate, txtDescription, txtCode);
+			    }else {
+			    	
+				    Label lblRevision = new Label();
+				    lblRevision.setText(String.valueOf(("R" + StartAtOne)));
+				    lblRevision.setPrefWidth(100);
+				    lblRevision.setAlignment(Pos.CENTER);
+				    lblRevision.setLayoutX(fieldWidthAlignment);
+				    lblRevision.setLayoutY(proportionalHeight*numberOfFields);
+				    lblRevision.setStyle("-fx-background-color: #DCDCDC;-fx-padding: 5 10 5 10;");
+					
+				    
+				    /**
+				     * Date Text field 1
+				     */
+			        
+			        Label lblDate = new Label();
+			        lblDate.setText(String.valueOf(dateCreated));
+			        lblDate.setAlignment(Pos.CENTER);
+			        lblDate.setLayoutX(fieldWidthAlignment*2);
+			        lblDate.setLayoutY(proportionalHeight*numberOfFields);
+			        lblDate.setStyle("-fx-background-color: #DCDCDC; -fx-padding: 5 10 5 10;");
+			        
+			        /**
+			         * Description Textfield 1
+			         * 			         */
+				    
+				    Label lblDescription = new Label();
+				    lblDescription.setText(description);
+				    lblDescription.setPrefWidth(260);
+				    lblDescription.setAlignment(Pos.BASELINE_LEFT);
+				    lblDescription.setLayoutX(fieldWidthAlignment*3);
+				    lblDescription.setLayoutY(proportionalHeight*numberOfFields);
+				    lblDescription.setStyle("-fx-background-color: #DCDCDC; -fx-padding: 5 10 5 10;");
+				    /**
+			         * 
+			         * Code TextField 1
+			         * 		         */
+				    
+				    Label lblCode = new Label();
+				    lblCode.setText(String.valueOf((code)));
+				    lblCode.setPrefWidth(100);
+
+				    lblCode.setAlignment(Pos.CENTER);
+				    lblCode.setLayoutX(fieldWidthAlignment*5);
+				    lblCode.setLayoutY(proportionalHeight*numberOfFields);
+				    lblCode.setStyle("-fx-background-color: #DCDCDC; -fx-padding: 5 10 5 10;");
+					
+				    StartAtOne +=1;
+				    root.getChildren().addAll(lblRevision, lblDate, lblDescription, lblCode);
+			    	
+			    	
+			    	
+			    }
+			    /**
+			    * Revision textField 1
+			    */
+				
+			}
+			
+		} catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
